@@ -2,6 +2,10 @@
 
 Music Wall is a local-first browser display for album artwork. It renders a full-screen animated cover wall with theme controls, motion controls, density settings, fullscreen mode, and optional local Music.app artwork sync on macOS.
 
+![Music Wall running with local Music.app artwork](./docs/music-wall-demo.gif)
+
+The demo above was captured from a local macOS Music.app library. It is included only as an example of the running wall; personal library data and artwork cache files remain ignored under `local-data/`.
+
 ## Compatibility
 
 | Mode | macOS | iPadOS / iOS | Windows / Linux | Notes |

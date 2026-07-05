@@ -492,10 +492,13 @@ input {
 
 @keyframes wallDrift {
   0% {
-    transform: translate3d(-1.5vw, -1.2vh, 0) rotateZ(-0.15deg);
+    transform: translate3d(0, 0, 0) rotateZ(0deg);
+  }
+  45% {
+    transform: translate3d(1.1vw, 0.8vh, 0) rotateZ(0.1deg);
   }
   100% {
-    transform: translate3d(1.7vw, 1.2vh, 0) rotateZ(0.15deg);
+    transform: translate3d(-1vw, -0.7vh, 0) rotateZ(-0.1deg);
   }
 }
 
