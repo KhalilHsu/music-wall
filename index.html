@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#10100f" />
+    <title>Music Wall</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2311100f'/%3E%3Cpath d='M13 14h18v18H13z' fill='%23d74b38'/%3E%3Cpath d='M33 14h18v18H33z' fill='%23e6bd5c'/%3E%3Cpath d='M13 34h18v18H13z' fill='%23288570'/%3E%3Cpath d='M33 34h18v18H33z' fill='%23f3eee4'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app" data-theme="dark">
+      <div class="ambient" aria-hidden="true"></div>
+
+      <section class="wall-stage" aria-label="Album cover wall">
+        <div class="wall-track" id="wallTrack"></div>
+      </section>
+
+      <header class="topbar">
+        <div class="brand" aria-label="Music Wall">
+          <span class="brand-mark"></span>
+          <span>Music Wall</span>
+        </div>
+
+        <nav class="controls" aria-label="Display controls">
+          <button class="icon-button" id="themeButton" type="button" title="Switch to light mode" aria-label="Switch to light mode" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="theme-icon-sun" d="M12 3v2.4M12 18.6V21M4.1 4.1l1.7 1.7M18.2 18.2l1.7 1.7M3 12h2.4M18.6 12H21M4.1 19.9l1.7-1.7M18.2 5.8l1.7-1.7" />
+              <circle class="theme-icon-sun" cx="12" cy="12" r="4.1" />
+              <path class="theme-icon-moon" d="M20 14.2A7.3 7.3 0 0 1 9.8 4a8 8 0 1 0 10.2 10.2z" />
+            </svg>
+          </button>
+          <button class="icon-button" id="motionButton" type="button" title="Pause motion" aria-label="Pause motion" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="motion-icon-pause" d="M8 5v14M16 5v14" />
+              <path class="motion-icon-play" d="M8 5l11 7-11 7z" />
+            </svg>
+          </button>
+          <button class="icon-button" id="shuffleButton" type="button" title="Shuffle covers" aria-label="Shuffle covers">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 7h3.2c2.4 0 3.5 10 6 10H15" />
+              <path d="M3 17h3.2c2.4 0 3.5-10 6-10H15" />
+              <path d="M15 4l5 3-5 3M15 14l5 3-5 3" />
+            </svg>
+          </button>
+          <button class="icon-button" id="fullscreenButton" type="button" title="Enter fullscreen" aria-label="Enter fullscreen">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="fullscreen-icon-enter" d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" />
+              <path class="fullscreen-icon-enter" d="M9 9L4 4M15 9l5-5M9 15l-5 5M15 15l5 5" />
+              <path class="fullscreen-icon-exit" d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" />
+              <path class="fullscreen-icon-exit" d="M3 9l6-6M21 9l-6-6M3 15l6 6M21 15l-6 6" />
+            </svg>
+          </button>
+          <button class="icon-button" id="castButton" type="button" title="Cast" aria-label="Cast" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8" />
+              <path d="M4 17a3 3 0 0 1 3 3M4 13a7 7 0 0 1 7 7M4 20h.01" />
+            </svg>
+          </button>
+          <button class="icon-button" id="settingsButton" type="button" title="Settings" aria-label="Settings" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+              <circle cx="9" cy="7" r="1.7" />
+              <circle cx="15" cy="12" r="1.7" />
+              <circle cx="11" cy="17" r="1.7" />
+            </svg>
+          </button>
+        </nav>
+      </header>
+
+      <aside class="settings-panel" id="settingsPanel" aria-label="Display settings" aria-hidden="true">
+        <div class="panel-head">
+          <h1>Settings</h1>
+          <button class="small-button" id="closeSettings" type="button" aria-label="Close settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="setting-block">
+          <div class="setting-row">
+            <label for="countRange">Tile density</label>
+            <output id="countOutput" for="countRange">24</output>
+          </div>
+          <input id="countRange" class="range" type="range" min="8" max="96" step="4" value="28" />
+          <div class="preset-grid" aria-label="Density presets">
+            <button type="button" data-count="8">8</button>
+            <button type="button" data-count="12">12</button>
+            <button type="button" data-count="28">28</button>
+            <button type="button" data-count="56">56</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <div class="setting-row">
+            <label for="gapRange">Tile gap</label>
+            <output id="gapOutput" for="gapRange">14</output>
+          </div>
+          <input id="gapRange" class="range" type="range" min="4" max="28" step="1" value="14" />
+        </div>
+
+        <div class="setting-block">
+          <div class="setting-row">
+            <label for="scaleRange">Feature tiles</label>
+            <output id="scaleOutput" for="scaleRange">Balanced</output>
+          </div>
+          <input id="scaleRange" class="range" type="range" min="0" max="2" step="1" value="1" />
+        </div>
+
+        <div class="setting-block source-block">
+          <div class="setting-row">
+            <label for="musicStatus">Local Music</label>
+            <output id="musicStatus">Local</output>
+          </div>
+          <form class="source-form" id="musicForm" autocomplete="off">
+            <div class="action-grid">
+              <button id="connectMusicButton" type="submit">Sync</button>
+              <button id="syncMusicButton" type="button">Reload</button>
+              <button id="clearMusicButton" type="button">Clear</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+
+      <aside class="cast-panel" id="castPanel" aria-label="Cast display" aria-hidden="true">
+        <div class="panel-head">
+          <h1>Cast</h1>
+          <button class="small-button" id="closeCast" type="button" aria-label="Close cast">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="cast-copy">
+          <p>Web AirPlay can open a media picker, but browsers do not expose direct full-page Apple TV casting.</p>
+        </div>
+
+        <div class="action-grid cast-actions">
+          <button id="nativeAirplayButton" type="button">Try AirPlay</button>
+        </div>
+        <output class="cast-status" id="castStatus" aria-live="polite">Ready</output>
+      </aside>
+
+      <video id="airplayVideo" class="airplay-video" muted playsinline x-webkit-airplay="allow" aria-hidden="true"></video>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
